@@ -22,7 +22,7 @@
 | --- | --- | --- |
 | | [Cloudfare DDNS](https://youtu.be/Nf7m3h11y-s) | |
 | | [Homer](https://github.com/bastienwirtz/homer) | |
-| | [Nextcloud](https://github.com/nextcloud/docker) | |
+| | [Samba](https://hub.docker.com/r/dperson/samba) | |
 | | [NGINX Proxy Manager](https://github.com/NginxProxyManager/nginx-proxy-manager) | |
 | | [Protainer](https://www.portainer.io/) | |
 | | [Vaultwarden](https://github.com/dani-garcia/vaultwarden) | |
