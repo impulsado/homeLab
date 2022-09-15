@@ -1,0 +1,45 @@
+pageInfo:
+  title: Hello, impulsado
+  description: Dashboard
+  logo: https://avatars.githubusercontent.com/u/72570835?v=4
+appConfig:
+  statusCheck: false
+  theme: dashy-docs
+  fontAwesomeKey: c94dc2b452
+  customCss: '.clock p.time { font-size: 3rem !important; }'
+  layout: vertical
+  iconSize: medium
+  language: es
+sections:
+  - name: Today
+    icon: far fa-smile-beam
+    displayData:
+      collapsed: false
+      hideForGuests: false
+    widgets:
+      - type: clock
+        id: 0_513_clock
+  - name: Selfhosted
+    icon: far fa-code
+    items:
+      - title: AdGuard
+        icon: si-adguard
+        url: http://192.168.1.81:3000/
+      - title: Nginx Reverse Proxy
+        icon: si-nginx
+        url: http://192.168.1.81:81/
+      - title: Portainer
+        icon: si-portainer
+        url: http://192.168.1.81:9000/
+      - title: Vaultwarden
+        icon: si-bitwarden
+        url: https://pass.impulsado.org
+      - title: Cloudflare
+        icon: si-cloudflare
+        url: https://www.cloudflare.com/
+      - title: wannaNotes
+        icon: si-github
+        url: https://www.notes.impulsado.org/
+      - title: Router
+        icon: si-pfsense
+        url: http://192.168.1.1/homeAuthentication.html

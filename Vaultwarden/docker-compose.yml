@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  vaultwarden:
+    restart: unless-stopped
+    container_name: vaultwarden
+    image: vaultwarden/server:latest
+    volumes:
+      - ./vw-data/:/data/
+    ports:
+      - 8062:80
+    environment:
+      - LOGIN_RATELIMIT_MAX_BURST=10
+      - LOGIN_RATELIMIT_SECONDS=60
+      - DOMAIN=https://pass.impulsado.org           # CHANGE THIS
+      - ADMIN_TOKEN=P@ssword                        # CHANGE THIS
+      - SIGNUPS_ALLOWED=false
+      - SIGNUPS_DOMAINS_WHITELIST=example.com       # CHANGE THIS
+      - SIGNUPS_VERIFY=true
+      - SIGNUPS_VERIFY_RESEND_TIME=3600
+      - SIGNUPS_VERIFY_RESEND_LIMIT=6
+      - EMERGENCY_ACCESS_ALLOWED=true
+      - SENDS_ALLOWED=true
+      - WEB_VAULT_ENABLED=true
