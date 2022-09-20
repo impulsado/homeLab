@@ -24,7 +24,9 @@ function startCheck() {
     fi
 
     echo ""
-    echo " Welcome to your new O.S. "
+    echo "=============================="
+    echo "   Welcome to your new O.S! "
+    echo "=============================="
     echo ""
     echo ""
     read -p "Enter your username: " username
@@ -38,7 +40,7 @@ function startCheck() {
     read -p "Do you want to install/configure SSH? [Y/n] " -e -i "Y" usr_op_ssh
     read -p "Do you want to install/configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
     read -p "Do you want to install/configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
-    read -p "Select other apps you want install: " -e -i "bat nmap tcpdump curl" usr_apps
+    read -p "Select other apps you want install: " -e -i "wget bat nmap tcpdump curl" usr_apps
     echo ""
     read -p "Do you want to start? [Y/n] " -e -i "Y" usr_op
 
