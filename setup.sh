@@ -182,6 +182,7 @@ alias tmux='tmux -u'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
+PS1='\[\e[0;38;5;46m\]\u\[\e[0;38;5;46m\]@\[\e[0;38;5;46m\]\H \[\e[0m\][\[\e[0m\]\w\[\e[0m\]] \[\e[0;93m\]\$ \[\e[0m\]'
 EOF
 }
 
