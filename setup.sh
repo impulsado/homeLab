@@ -3,7 +3,7 @@
 # ===================
 # Author: @impulsado
 # Web: impulsado.org
-# Date:   08/07/2022
+# Date:   18/10/2022
 # ===================
 
 # === FUNCTIONS ===
@@ -37,12 +37,13 @@ function startCheck() {
         echo ""
     fi
 
+    read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Y" usr_op_shell
     read -p "Do you want to install/configure SSH? [Y/n] " -e -i "Y" usr_op_ssh
     read -p "Do you want to install/configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
     read -p "Do you want to install/configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
-    read -p "Select other apps you want install: " -e -i "wget bat nmap tcpdump curl" usr_apps
+    read -p "Select other apps you want install: " -e -i "wget bat nmap tcpdump curl xclip" usr_apps
     echo ""
-    read -p "Do you want to start? [Y/n] " -e -i "Y" usr_op
+    read -p "Do you want to proceed? [Y/n] " -e -i "Y" usr_op
 
     if [[ $usr_op != "Y" ]]; then
         echo ""
@@ -62,6 +63,35 @@ function initial() {
     chown $username:$username /home/$username/Programs
     timedatectl set-timezone Europe/Madrid
     clear
+}
+
+function zshrc() {
+    # Download Oh-My-ZSH
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    
+    # Download plugins
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$username/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+    # Change .zshrc
+    sed -i 's/(git)/(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' /home/$username/.zshrc
+    cat <<EOF >> /home/$username/.zshrc
+# === ALIAS ===
+alias ls='ls --color=auto'
+alias ll='ls -la --color=auto'
+alias cat='batcat'
+alias update='sudo apt update -y && sudo apt upgrade -y'
+alias poweroff='sudo systemctl poweroff'
+alias reboot='sudo systemctl reboot'
+alias apt='sudo apt'
+alias mkt='mkdir'
+alias tmux='tmux -u'
+alias vim='nvim'
+alias myip='curl ifconfig.co/'
+
+# === OTHERS ===
+export PATH=$PATH:/home/$username/Scripts/
+EOF
 }
 
 function sshInstall() {
@@ -179,6 +209,8 @@ alias reboot='sudo systemctl reboot'
 alias apt='sudo apt'
 alias mkt='mkdir'
 alias tmux='tmux -u'
+alias vim='nvim'
+alias myip='curl ifconfig.co/'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
@@ -260,25 +292,12 @@ function printEnd() {
     clear
     echo ""
     echo ""
+    echo " BASH:  source ~/.bashrc"
     echo ""
-    echo " 1. EXECUTE THIS COMMAND:  source ~/.bashrc"
-    echo ""
-    echo " 2. README:   cat /home/$username/README.md"
+    echo " ZSH:   source ~/.zshrc"
     echo ""
     echo ""
-    cat <<EOF >> /home/$username/README.md
-# !! IMPORTANT !!
-The system have been configured successfully.
-Remember to take a look to the new aliases created.
-
-Before using tmux, you must execute this commands:
-1. "tmux"
-2. "tmux source-file ~/.tmux.conf"
-
-
-
-> Author: impulsado
-EOF
+    echo "> Author: impulsado"
 }
 
 # === MAIN ===
@@ -286,26 +305,15 @@ startCheck
 
 if [[ $usr_op == "Y" ]]; then
     initial
+    if [[ $usr_op_shell == "B" ]]; then
+        bashrc
+    else
+        zshrc
+    fi
     sshInstall
     tmuxInstall
     nvimInstall
-    bashrc
     secureOS
     sleep 1
     printEnd
 fi
-
-
-# TO DO
-- [ ] Alias vim myip
-- [ ] Install xclip
-- [ ] Install zsh and plugins
-
-# Download pluguins
-git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-# Change .zshrc
-sed -i 's/(git)/(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc
-
-
