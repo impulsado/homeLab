@@ -294,3 +294,18 @@ if [[ $usr_op == "Y" ]]; then
     sleep 1
     printEnd
 fi
+
+
+# TO DO
+- [ ] Alias vim myip
+- [ ] Install xclip
+- [ ] Install zsh and plugins
+
+# Download pluguins
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Change .zshrc
+sed -i 's/(git)/(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc
+
+
