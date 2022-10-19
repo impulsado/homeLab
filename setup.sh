@@ -91,6 +91,7 @@ alias mkt='mkdir'
 alias tmux='tmux -u'
 alias vim='nvim'
 alias myip='curl ifconfig.co/'
+alias copy='xcopy -sel c <'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
@@ -215,6 +216,7 @@ alias mkt='mkdir'
 alias tmux='tmux -u'
 alias vim='nvim'
 alias myip='curl ifconfig.co/'
+alias copy='xcopy -sel c <'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
