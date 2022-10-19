@@ -66,8 +66,11 @@ function initial() {
 }
 
 function zshrc() {
-    # Download Oh-My-ZSH
+    # Download & Install Oh-My-ZSH
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    # Download & Install Starship
+    curl -sS https://starship.rs/install.sh | sh 
     
     # Download plugins
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
@@ -91,6 +94,7 @@ alias myip='curl ifconfig.co/'
 
 # === OTHERS ===
 export PATH=$PATH:/home/$username/Scripts/
+eval "$(starship init zsh)"
 EOF
 }
 
