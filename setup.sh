@@ -71,7 +71,6 @@ function initial() {
 function zshrc() {
     # Download & Install Oh-My-ZSH
     sudo apt install -y zsh
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Download & Install Starship
     curl -sS https://starship.rs/install.sh | sh 
@@ -304,7 +303,8 @@ function printEnd() {
     clear
     echo ""
     echo ""
-    echo " LOGOUT AND CHECK THE NEW FEATURES!"
+    echo ' 1. EXECUTE:  sudo sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"'
+    echo " 2. LOGOUT AND CHECK THE NEW FEATURES!"
     echo ""
     echo ""
     echo "> Author: impulsado"
