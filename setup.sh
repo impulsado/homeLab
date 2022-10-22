@@ -3,7 +3,7 @@
 # ===================
 # Author: @impulsado
 # Web: impulsado.org
-# Date:   18/10/2022
+# Date:   22/10/2022
 # ===================
 
 # === FUNCTIONS ===
@@ -37,11 +37,11 @@ function startCheck() {
         echo ""
     fi
 
-    read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Y" usr_op_shell
+    read -p "Which SHELL do you prefere BASH [B] or ZSH [Z]? " -e -i "Z" usr_op_shell
     read -p "Do you want to install/configure SSH? [Y/n] " -e -i "Y" usr_op_ssh
     read -p "Do you want to install/configure TMUX? [Y/n] " -e -i "Y" usr_op_tmux
     read -p "Do you want to install/configure NEOVIM? [Y/n] " -e -i "Y" usr_op_neovim
-    read -p "Select other apps you want install: " -e -i "wget bat nmap tcpdump curl xclip" usr_apps
+    read -p "Select other apps you want install: " -e -i "wget bat nmap tcpdump curl xclip git" usr_apps
     echo ""
     read -p "Do you want to proceed? [Y/n] " -e -i "Y" usr_op
 
@@ -62,17 +62,22 @@ function initial() {
     chown $username:$username /home/$username/Scripts
     chown $username:$username /home/$username/Programs
     timedatectl set-timezone Europe/Madrid
+    wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.1.0/Mononoki.zip
+    unzip Mononoki.zip -d ~/.fonts
+    fc-cache -fv
     clear
 }
 
 function zshrc() {
     # Download & Install Oh-My-ZSH
+    sudo apt install -y zsh
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     # Download & Install Starship
     curl -sS https://starship.rs/install.sh | sh 
     
     # Download plugins
+    sudo apt install -y zsh-autosuggestions zsh-syntax-highlighting
     git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-/home/$username/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
@@ -80,8 +85,9 @@ function zshrc() {
     sed -i 's/(git)/(git sudo zsh-autosuggestions zsh-syntax-highlighting)/g' /home/$username/.zshrc
     cat <<EOF >> /home/$username/.zshrc
 # === ALIAS ===
-alias ls='ls --color=auto'
+alias ls='ls -lh --color=auto'
 alias ll='ls -la --color=auto'
+alias grep='grep --color=auto'
 alias cat='batcat'
 alias update='sudo apt update -y && sudo apt upgrade -y'
 alias poweroff='sudo systemctl poweroff'
@@ -137,7 +143,7 @@ function tmuxInstall() {
     if [[ $usr_op_tmux != "Y" ]]; then
         return 2
     fi
-    apt install -y tmux git
+    apt install -y tmux 
     git clone https://github.com/tmux-plugins/tpm /home/$username/.tmux/plugins/tpm
     touch /home/$username/.tmux.conf
     cat <<EOF > /home/$username/.tmux.conf
@@ -203,10 +209,10 @@ EOF
 }
 
 function bashrc() {
-cat <<EOF >> /home/$username/.bashrc
-# === ALIAS ===
-alias ls='ls --color=auto'
+    cat <<EOF >> /home/$username/.bashrc
+alias ls='ls -lh --color=auto'
 alias ll='ls -la --color=auto'
+alias grep='grep --color=auto'
 alias cat='batcat'
 alias update='sudo apt update -y && sudo apt upgrade -y'
 alias poweroff='sudo systemctl poweroff'
@@ -257,10 +263,10 @@ function nvimInstall() {
     if [[ $usr_op_neovim != "Y" ]]; then
         return 2
     fi
-    apt install -y neovim > /dev/null
+    apt install -y neovim
     if [ ! -d /home/$username/.config/nvim ]; then
-    mkdir -p /home/$username/.config/nvim
-    cat <<EOF >> /home/$username/.config/nvim/init.vim
+        mkdir -p /home/$username/.config/nvim
+        cat <<EOF >> /home/$username/.config/nvim/init.vim
 syntax on                   " syntax highlighting
 syntax on                   " syntax highlighting
 set hidden                  " Required to keep multiple buffers open
@@ -291,16 +297,14 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 EOF
-fi
+    fi
 }
 
 function printEnd() {
     clear
     echo ""
     echo ""
-    echo " BASH:  source ~/.bashrc"
-    echo ""
-    echo " ZSH:   source ~/.zshrc"
+    echo " LOGOUT AND CHECK THE NEW FEATURES!"
     echo ""
     echo ""
     echo "> Author: impulsado"
